@@ -1,4 +1,4 @@
-﻿using System.Threading;
+﻿
 using TODO.Enumeraciones;
 
 namespace TODO.Entidades
