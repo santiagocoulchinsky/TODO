@@ -1,7 +1,7 @@
 ﻿
 namespace TODO.Entidades
 {
-    class Asigna : BaseEntidad
+    class Asigna 
     {
         public int OperarioId { get; set; }
         public Operario Operario { get; set; }

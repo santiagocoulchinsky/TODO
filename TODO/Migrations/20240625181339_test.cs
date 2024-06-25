@@ -5,7 +5,7 @@
 namespace TODO.Migrations
 {
     /// <inheritdoc />
-    public partial class @new : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,21 @@ namespace TODO.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Operarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tareas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Estado = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tareas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,6 +76,9 @@ namespace TODO.Migrations
 
             migrationBuilder.DropTable(
                 name: "Operarios");
+
+            migrationBuilder.DropTable(
+                name: "Tareas");
         }
     }
 }

@@ -10,8 +10,8 @@ using TODO.Entidades;
 namespace TODO.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240625002213_new")]
-    partial class @new
+    [Migration("20240625181339_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

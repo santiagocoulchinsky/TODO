@@ -1,4 +1,5 @@
-﻿using TODO.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using TODO.Entidades;
 using TODO.Repositorio;
 
 
@@ -9,7 +10,7 @@ namespace TODO.Vistas
         public void MostrarMenu()
         {
             var repo = new RepositorioGenerico<Tarea>();
-            var repo2 = new RepositorioGenerico<Asigna>();
+            //var repo2 = new RepositorioGenerico<Asigna>();
             var repo3 = new RepositorioGenerico<Operario>();
 
             int opcion;
@@ -57,8 +58,15 @@ namespace TODO.Vistas
                     Console.WriteLine();
                     using (var context = new AppDbContext())
                     {
-                        var asigna = new Asigna() { TareaId = i, OperarioId = j };
-                        repo2.Crear(asigna);
+                        var tar = context.Tareas
+                            .Where(x => x.Id == i)
+                            //.Include(x => x.Operarios)
+                            .Single();
+                        Asigna asigna = new Asigna(); 
+                        asigna.OperarioId = j;
+                        tar.Operarios.Add(asigna);
+
+                        context.SaveChanges();
                     }
                        
                     break;
@@ -90,12 +98,17 @@ namespace TODO.Vistas
 
                 case 7:
                     var lista = repo.VerTodos();
+                    //var asign = repo2.VerTodos();
                     foreach (var item in lista)
                     {
                         if (item.Estado == Enumeraciones.EstadoTarea.Pendiente)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine($"Tarea: {item.Title}\nDescripción: {item.Description}\nId: {item.Id}");
+                            //foreach (var item2 in asign)
+                            //{
+
+                            //}
                             Console.ForegroundColor = ConsoleColor.Magenta;
                             Console.WriteLine("-----------------");
                             Console.ForegroundColor = ConsoleColor.White;

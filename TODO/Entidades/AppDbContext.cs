@@ -4,6 +4,7 @@ namespace TODO.Entidades
 {
     class AppDbContext : DbContext
     {
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -21,12 +22,12 @@ namespace TODO.Entidades
 
             modelBuilder.Entity<Asigna>()
                 .HasOne(x => x.Tarea)
-                .WithMany(x => x.Operarios)
+                .WithMany(h => h.Operarios)
                 .HasForeignKey(x => x.TareaId);
 
             modelBuilder.Entity<Asigna>()
                 .HasOne(x=> x.Operario)
-                .WithMany(x=> x.Tareas)
+                .WithMany(l=> l.Tareas)     
                 .HasForeignKey(x=>x.OperarioId);
 
             base.OnModelCreating(modelBuilder);     
@@ -34,7 +35,7 @@ namespace TODO.Entidades
         }
 
         public DbSet<Tarea> Tareas { get; set; }
-        public DbSet<Operario> Operarios {  get; set; }
+        public DbSet<Operario> Operarios { get; set; }
         public DbSet<Asigna> Asignaciones { get; set; }
     }
 }

@@ -24,9 +24,6 @@ namespace TODO.Migrations
                     b.Property<int>("OperarioId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("TareaId", "OperarioId");
 
                     b.HasIndex("OperarioId");

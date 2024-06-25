@@ -9,7 +9,6 @@ namespace TODO.Entidades
         {
             Estado = EstadoTarea.Pendiente;
             Operarios = new List<Asigna>();
-
         }
         public void Fin()
         {
