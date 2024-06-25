@@ -10,7 +10,7 @@ namespace TODO.Vistas
         public void MostrarMenu()
         {
             var repo = new RepositorioGenerico<Tarea>();
-            //var repo2 = new RepositorioGenerico<Asigna>();
+            
             var repo3 = new RepositorioGenerico<Operario>();
 
             int opcion;
@@ -21,7 +21,8 @@ namespace TODO.Vistas
             Console.WriteLine("5- Marcar Tarea. ");
             Console.WriteLine("6- Desmarcar Tarea. ");
             Console.WriteLine("7- Ver Tareas. ");
-            Console.WriteLine("8- Salir. ");
+            Console.WriteLine("8- Ver asignaciones. ");
+            Console.WriteLine("9- Salir. ");
             Console.Write("\nOpción: ");
             opcion = int.Parse(Console.ReadLine());
             Console.WriteLine("-----------------");
@@ -60,7 +61,10 @@ namespace TODO.Vistas
                     {
                         var tar = context.Tareas
                             .Where(x => x.Id == i)
-                            //.Include(x => x.Operarios)
+                            .Include(x => x.Operarios)
+                            .ThenInclude(x => x.Operario)
+                            .ThenInclude (x => x.Nombre)
+                            
                             .Single();
                         Asigna asigna = new Asigna(); 
                         asigna.OperarioId = j;
@@ -98,17 +102,13 @@ namespace TODO.Vistas
 
                 case 7:
                     var lista = repo.VerTodos();
-                    //var asign = repo2.VerTodos();
+                    
                     foreach (var item in lista)
                     {
                         if (item.Estado == Enumeraciones.EstadoTarea.Pendiente)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine($"Tarea: {item.Title}\nDescripción: {item.Description}\nId: {item.Id}");
-                            //foreach (var item2 in asign)
-                            //{
-
-                            //}
                             Console.ForegroundColor = ConsoleColor.Magenta;
                             Console.WriteLine("-----------------");
                             Console.ForegroundColor = ConsoleColor.White;
@@ -125,6 +125,21 @@ namespace TODO.Vistas
                     break;
 
                 case 8:
+                    using (var context = new AppDbContext())
+                    {
+                        var asign = context.Asignaciones
+                            .Include(x => x.Operario)
+                            .Include(x => x.Tarea);
+
+                        foreach (var item in asign)
+                        {
+                            Console.WriteLine($"{item.Operario.Nombre} Se encarga de: {item.Tarea.Title} {item.Tarea.Description}");
+                        }
+                    }
+
+                    break;
+
+                case 9:
                     Environment.Exit(0);
                     break;
             }
