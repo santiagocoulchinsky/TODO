@@ -57,15 +57,13 @@ namespace TODO.Vistas
                     Console.Write("Se asigna a: ");
                     int j = int.Parse(Console.ReadLine());
                     Console.WriteLine();
+
                     using (var context = new AppDbContext())
                     {
                         var tar = context.Tareas
                             .Where(x => x.Id == i)
-                            .Include(x => x.Operarios)
-                            .ThenInclude(x => x.Operario)
-                            .ThenInclude (x => x.Nombre)
-                            
                             .Single();
+
                         Asigna asigna = new Asigna(); 
                         asigna.OperarioId = j;
                         tar.Operarios.Add(asigna);
@@ -125,6 +123,7 @@ namespace TODO.Vistas
                     break;
 
                 case 8:
+                    
                     using (var context = new AppDbContext())
                     {
                         var asign = context.Asignaciones
@@ -133,8 +132,9 @@ namespace TODO.Vistas
 
                         foreach (var item in asign)
                         {
-                            Console.WriteLine($"{item.Operario.Nombre} Se encarga de: {item.Tarea.Title} {item.Tarea.Description}");
+                            Console.WriteLine($"{item.Operario.Nombre} se encarga de: {item.Tarea.Title} {item.Tarea.Description}");
                         }
+                        Console.WriteLine("-----------------");
                     }
 
                     break;

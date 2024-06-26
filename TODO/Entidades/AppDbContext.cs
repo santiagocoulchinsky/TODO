@@ -21,14 +21,14 @@ namespace TODO.Entidades
                 .HasKey(x => new { x.TareaId, x.OperarioId });
 
             modelBuilder.Entity<Asigna>()
-                .HasOne(x => x.Tarea)
-                .WithMany(h => h.Operarios)
-                .HasForeignKey(x => x.TareaId);
+                .HasOne(x=> x.Tarea)
+                .WithMany(h=> h.Operarios)
+                .HasForeignKey(x=> x.TareaId);
 
             modelBuilder.Entity<Asigna>()
                 .HasOne(x=> x.Operario)
                 .WithMany(l=> l.Tareas)     
-                .HasForeignKey(x=>x.OperarioId);
+                .HasForeignKey(x=> x.OperarioId);
 
             base.OnModelCreating(modelBuilder);     
         
