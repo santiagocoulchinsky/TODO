@@ -128,7 +128,7 @@ namespace TODO.Vistas
                     {
                         var asign = context.Asignaciones
                             .Include(x => x.Operario)
-                            .Include(x => x.Tarea);
+                            .Include(x => x.Tarea);         
 
                         foreach (var item in asign)
                         {
